@@ -1,0 +1,13 @@
+'use strict';
+function drawBuilding(l){if(!l.building)return;const b=l.building;rect(b.x,b.y,b.w,b.h,'#d5c7af',12);for(let y=b.y+70;y<b.y+b.h-50;y+=220){for(let x=b.x+55;x<b.x+b.w-50;x+=155){rect(x,y,65,90,'#8bb8c1',7);rect(x+29,y,5,90,'#eff0d8',1);rect(x,y+43,65,4,'#eff0d8',1);}ctx.fillStyle='#7f715d';ctx.font='bold 17px Segoe UI';ctx.fillText('KAT '+Math.max(1,Math.round((b.y+b.h-y)/220)),b.x+10,y-15);}rect(b.x-15,b.y-10,b.w+30,16,'#836e5e',5);}
+function drawCommunity(l){
+ const text=(s,x,y,color='#41594b')=>{ctx.fillStyle=color;ctx.font='bold 12px Segoe UI';ctx.fillText(s,x,y);},icons={foam:l.season===3?'❄':'🔵',diamond:'💎',water:'💧',food:'🥣',blanket:'🧣',trash:'🗞',parcel:'🛍',heart:'♥'};
+ for(const s of l.supplies)if(!s.taken){circle(s.x+14,s.y+14,18,s.kind==='heart'?'#ffe1de':'#fff7da');ctx.font='24px Segoe UI Emoji';ctx.fillStyle=s.kind==='heart'?'#cb5b5b':'#4c6470';ctx.fillText(icons[s.kind],s.x+1,s.y+23);}
+ if(l.pool){rect(l.pool.x,l.pool.y,l.pool.w,18,'#78d3e8',5);for(let x=l.pool.x;x<l.pool.x+l.pool.w;x+=35)text('≈',x,l.pool.y+10,'#fff');text('HAVUZ: YÜRÜ',l.pool.x,l.pool.y-15);}
+ if(l.road){rect(l.road.x,l.road.y,l.road.w,14,'#6e7b7a',2);for(let x=l.road.x+10;x<l.road.x+l.road.w;x+=25)rect(x,l.road.y,10,14,'#edf1d9');circle(l.road.x-12,l.road.y-40,9,l.road.green?'#6bcf81':'#e28a70');text(l.road.green?'GÜVENLİ GEÇİŞ':'BEKLE',l.road.x,l.road.y-25);for(const car of l.cars){rect(car.x,car.y,car.w,car.h,'#d99c61',6);rect(car.x+9,car.y-10,30,16,'#b8dbe0',4);circle(car.x+10,car.y+car.h,6,'#46575d');circle(car.x+40,car.y+car.h,6,'#46575d');}}
+ const stationIcons={tap:'🚰',shop:'🏪',foodBowl:'🥣',waterBowl:'💧',shelter:'🏠',plant:'🌷',bin:'♻',elder:'🧓',poolSign:'🚶',look:'🛑',beacon:'🏮'};
+ for(const s of l.stations){rect(s.x-4,s.y+5,s.w+8,s.h-5,'#f7eed8',7);ctx.font='30px Segoe UI Emoji';ctx.fillText(stationIcons[s.kind],s.x,s.y+35);if(Math.abs(game.player.x-s.x)<100&&Math.abs(game.player.y-s.y)<90)text(s.label,s.x-30,s.y-12);if(['waterBowl','foodBowl','shelter'].includes(s.kind)){ctx.font='20px Segoe UI Emoji';ctx.fillText('🐈',s.x+15,s.y+52);}}
+ for(const a of l.agents){const r=Veshte.community.roles[a.type];ctx.save();ctx.translate(a.x+16,a.y+23);ctx.scale(a.facing,1);if(a.stun){circle(0,-5,29,'#b6e8ec66');text('MOLA',-18,-31);}
+ rect(-12,0,24,23,r.color,5);circle(0,-12,11,'#e7c5a2');rect(-14,-23,28,6,r.color,3);circle(5,-13,2,'#48504b');rect(-10,21,8,5,'#515951',2);rect(4,21,8,5,'#515951',2);ctx.restore();text(r.name,a.x-17,a.y-15);}
+ for(const p of game.projectiles||[]){if(p.owner==='player'){circle(p.x+6,p.y+6,7,l.season===3?'#fcffff':'#7cd8e4');circle(p.x+3,p.y+3,2,'#fff');}else{rect(p.x,p.y,p.w,p.h,'#f1d89f',2);text('!',p.x+3,p.y+9,'#846c4f');}}
+}
