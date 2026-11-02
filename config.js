@@ -3,5 +3,6 @@
 window.VESHTE_CONFIG = {
  supabaseUrl: 'https://ujknsffftugnsirszain.supabase.co',
  publishableKey: 'sb_publishable_Nh0cMYydyt6NxEgz5qR2Kg_RBUwExEd',
- emailSignupReady: false
+ emailSignupReady: true
 };
+
