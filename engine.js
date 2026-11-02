@@ -3,7 +3,7 @@
 const worlds=[
  {name:'Peynir Tatil Kasabası',icon:'🧀',sky:'#d4eddf',far:'#a8cdb1',ground:'#628d57',accent:'#f3ce62',guide:'Ceren',story:'Tatil kasabasının pikniği için peynir toplayalım. Işıklı kapıya ulaş!',levels:['İlk patiler','Piknik yolu']},
  {name:'Macera Adası',icon:'🌴',sky:'#c7e9ed',far:'#8cc9bc',ground:'#3b8b73',accent:'#f4ba75',guide:'Kaptan Pengu',story:'Ada yolları küçük boşluklarla dolu. Zıplayarak karşıya geç, keşif bayrağını bul!',levels:['Kıyı keşfi','Saklı koy']},
- {name:'Peynir Arcade',icon:'🕹️',sky:'#292945',far:'#444064',ground:'#7762ac',accent:'#edb2e6',guide:'Kermit',story:'Miyav! Peynir Arcade ışıldıyor. Gezinen pofudukların üstüne zıplayınca uyurlar.',levels:['Işıklı salon','Yıldız makinesi']},
+ {name:'Peynir Arcade',icon:'🕹️',sky:'#292945',far:'#444064',ground:'#7762ac',accent:'#edb2e6',guide:'Pamuk',story:'Miyav! Peynir Arcade ışıldıyor. Gezinen pofudukların üstüne zıplayınca uyurlar.',levels:['Işıklı salon','Yıldız makinesi']},
  {name:'VR Rüya',icon:'✦',sky:'#333758',far:'#62628d',ground:'#7385b9',accent:'#9ce1d8',guide:'Bagujik',story:'Rüyada yerçekimi daha hafif. Uzun zıplayışlarla kristal yolun sonuna ulaş!',levels:['Bulut adımları','Rüya köprüsü']},
  {name:'Penguteam Stadyumu',icon:'⚽',sky:'#d8e9dc',far:'#94bca7',ground:'#4e8864',accent:'#e9ce78',guide:'Çınar',story:'Penguteam sahaya çıkıyor! Sarı yaylı minderler seni daha yükseğe taşıyacak.',levels:['Isınma turu','Dostluk kupası']},
  {name:'Bebek Yuva',icon:'🍼',sky:'#f2e2d5',far:'#d1bcb5',ground:'#a88479',accent:'#eab59c',guide:'Ceren',story:'22 yavru grubu yuvada bizi bekliyor. Peynirleri topla, sıcacık yuvaya ulaş!',levels:['Yumuşak patikalar','Yuvaya dönüş']}
