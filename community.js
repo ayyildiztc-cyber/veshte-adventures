@@ -27,7 +27,11 @@ function decorate(l,profile={}){
  const supply=(x,y,kind)=>l.supplies.push({...box(x,y-28),kind,taken:false});
  const station=(x,y,kind,label)=>l.stations.push({...box(x,y-48,38,48),kind,label});
  // Shared service landing keeps task stations supported in every shuffled layout.
-l.platforms.push(box(Math.max(0,goalx-330),gy,400,16));
+// The exit has its own clear landing, beyond all existing route geometry.
+const exitX=Math.max(l.width,...[...l.grounds,...l.platforms,...l.items].map(s=>s.x+s.w))+140;
+l.goal.x=exitX;l.width=exitX+l.goal.w+160;
+l.exitLane=box(exitX-100,l.goal.y-100,265,l.goal.h+100);
+l.platforms.push(box(Math.max(0,goalx-330),gy,l.width-Math.max(0,goalx-330),16));
 const q=l.quest.type;const sourceX=sx+50;
  if(['water','garden','winter'].includes(q))station(sourceX,sy,'tap','Çeşme · E');
  if(['feed','winter'].includes(q)){[110,190,270].forEach(dx=>supply(sx+dx,sy,'diamond'));station(goalx-220,gy,'shop','Mama · 3 💎 · E');station(goalx-80,gy,'foodBowl','Mama kabı · E');}
@@ -42,7 +46,7 @@ const q=l.quest.type;const sourceX=sx+50;
  supply(sx+15,sy-65,'foam'); // A small hop earns the first three throws.
  supply(Math.max(30,goalx-300),gy,'heart');
  const surfaces=[...l.grounds,...l.platforms].filter(s=>s.y>=150&&s.w>=140);const used=[...l.items,...l.supplies,...l.stations];const points=[];
- for(const s of surfaces)for(const rise of [32,112])for(let x=s.x+45;x<s.x+s.w-40;x+=95){const p=box(x,s.y-rise,24,24);if(!used.some(a=>Math.hypot(a.x-p.x,a.y-p.y)<78)&&!points.some(a=>Math.hypot(a.x-p.x,a.y-p.y)<78))points.push(p);}
+ for(const s of surfaces)for(const rise of [32,112])for(let x=s.x+45;x<s.x+s.w-40&&x<exitX-150;x+=95){const p=box(x,s.y-rise,24,24);if(!used.some(a=>Math.hypot(a.x-p.x,a.y-p.y)<78)&&!points.some(a=>Math.hypot(a.x-p.x,a.y-p.y)<78))points.push(p);}
  const candidates=V.shuffle(points,V.rng((profile.seed||1)+l.index*237));l.foods=[];l.cheeses=[];
  for(let i=0;i<Math.min(14,candidates.length);i++){const p=candidates[i];if(i<2)l.foods.push({...p,kind:i?'speed':'spinach',taken:false});else l.cheeses.push({...p,taken:false});}
  // Patrols stay on a support and away from spawn/quest stations.

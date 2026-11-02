@@ -11,7 +11,7 @@ const messages={otp_expired:'Kod geçersiz veya süresi dolmuş. Yeni kod isteyi
  signup(email,password,redirect){return this.request('/auth/v1/signup?redirect_to='+encodeURIComponent(redirect),{email,password},'POST',false);}
  resend(email,redirect){return this.request('/auth/v1/resend',{type:'signup',email,options:{emailRedirectTo:redirect}},'POST',false);}
  recover(email,redirect){return this.request('/auth/v1/recover?redirect_to='+encodeURIComponent(redirect),{email},'POST',false);}
- async verifySignup(email,token){const result=await this.request('/auth/v1/verify',{email,token,type:'email'},'POST',false);if(result?.access_token&&result.refresh_token){this.accept(result);await this.logout();}return true;}
+ async verifySignup(email,token){const result=await this.request('/auth/v1/verify',{email,token,type:'email'},'POST',false);if(result?.access_token&&result.refresh_token){this.accept(result);await this.logout().catch(()=>{});}return true;}
  async logout(){try{if(this.session)await this.request('/auth/v1/logout',{});}finally{this.session=null;}}
  rpc(name,args={}){return this.request('/rest/v1/rpc/'+name,args);}
 }
