@@ -57,6 +57,22 @@ class Game extends Base{
  hurt(){const before=this.lives;super.hurt();if(this.over&&before>0){Object.assign(this.player,this.level.spawn,{vx:0,vy:0});this.notice='Üç can bitti. Bu bölüm baştan başlayacak; tamamlanan duraklar korunur.';}}
  civicReady(){const q=this.level.quest.type;return q==='winter'?this.civic.shelter&&this.civic.water&&this.civic.feed:q==='feed'?this.civic.feed:q==='water'||q==='garden'?this.civic.water:q==='trash'?this.civic.trash:q==='elder'?this.civic.elder:q==='pool'?this.civic.pool:q==='traffic'?this.civic.traffic:this.civic.final;}
  ready(){return super.ready()&&!!this.civicReady();}
+ remaining(){
+ const l=this.level,b=this.bag,c=this.civic,steps=[];
+ if(this.tokens<l.required)steps.push('Parkur nesnelerini bul: '+this.tokens+'/'+l.required+' (peynirler ayrı puandır).');
+ if(l.template===4&&l.bridges.some(x=>!x.open))steps.push('Üç tahtayla köprü kolunda E tuşuna bas.');
+ if(l.template===9&&this.switchCount<3)steps.push('Fenerleri sırayla yak: '+this.switchCount+'/3. Yakınında E tuşuna bas.');
+ const q=l.quest.type;
+ if((q==='feed'||q==='winter')&&!c.feed)steps.push(b.food?'Mama kabına yaklaş ve E tuşuna bas.':b.diamond>=3?'Bakkalın mama tezgâhında E tuşuna bas; ardından mama kabına götür.':'Mama için elmas topla: '+b.diamond+'/3.');
+ if(['water','garden','winter'].includes(q)&&!c.water)steps.push(b.water?(q==='garden'?'Saksıya':'Su kabına')+' yaklaş ve E tuşuna bas.':'Çeşmeye yaklaş ve E ile su doldur.');
+ if(q==='winter'&&!c.shelter)steps.push(b.blanket?'Kuru yuvaya yaklaş ve E ile örtüyü bırak.':'Kuru yuva örtüsünü bul.');
+ if(q==='trash'&&!c.trash)steps.push(b.trash>=3?'Geri dönüşüm kutusunda E ile çöpleri bırak.':'Çöp topla: '+b.trash+'/3.');
+ if(q==='elder'&&!c.elder)steps.push(b.parcel?'Komşunun yanında E ile poşeti teslim et.':'Komşunun poşetini bul.');
+ if(q==='pool'&&!c.pool)steps.push(this.walkDistance>=100?'Havuz levhasında E tuşuna bas.':'Mavi alanda Yavaş / Shift ile yürü: '+Math.min(100,Math.floor(this.walkDistance))+'/100.');
+ if(q==='traffic'&&!c.traffic)steps.push(this.looked?'Yeşil ışıkta yaya geçidinin sağ tarafına geç.':'DUR levhasında E ile iki yana bak.');
+ if(q==='final'&&!c.final)steps.push(this.profile.civicDone.slice(0,11).every(Boolean)?'İyilik Feneri yanında E tuşuna bas.':'Haritadaki önceki komşuluk görevlerini tamamla.');
+ return steps;
+ }
  useGift(){if(!this.gift||this.giftUsed)return;this.giftUsed=true;const kind=this.gift[2];if(kind==='water')this.bag.water++;if(kind==='diamonds')this.bag.diamond+=3;if(kind==='shield')this.shield=true;if(kind==='calm'||kind==='traffic'){this.slowTimer=12;this.level.agents.forEach(a=>a.stun=12);}if(kind==='blanket')this.bag.blanket++;if(kind==='glove'){for(const s of this.level.supplies)if(s.kind==='trash'&&!s.taken&&Math.hypot(s.x-this.player.x,s.y-this.player.y)<330){s.taken=true;this.bag.trash++;}}if(kind==='care'){this.bag.blanket++;this.bag.food++;this.bag.water++;}if(kind==='star'){this.shield=true;this.lives=Math.min(3,this.lives+1);}this.notice=this.gift[1]+' kullanıldı.';this.emit('power');}
  interact(s,input){const b=this.bag,c=this.civic;
  if(s.kind==='tap'){b.water=1;this.notice='Matara temiz suyla doldu.';}
