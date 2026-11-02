@@ -1,0 +1,18 @@
+{
+  "name": "Veshte Adventures",
+  "short_name": "Veshte",
+  "lang": "tr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f3e8",
+  "theme_color": "#244d3d",
+  "icons": [
+    {
+      "src": "app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
